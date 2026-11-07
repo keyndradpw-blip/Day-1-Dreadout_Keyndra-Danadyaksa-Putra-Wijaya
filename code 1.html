@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taskie - Student Task Planner</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f5f3ff;
+    color: #292642;
+    padding: 30px;
+}
+
+.app {
+    max-width: 1200px;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 25px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 850px;
+    box-shadow: 0 15px 45px rgba(79, 65, 130, 0.10);
+}
+
+/* SIDEBAR */
+.sidebar {
+    background: #eeeaff;
+    padding: 30px 22px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+    color: #7563d8;
+    margin-bottom: 45px;
+}
+
+.logo span {
+    color: #ff9b8f;
+}
+
+.profile {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
+}
+
+.avatar {
+    background: #dcd4ff;
+    border-radius: 50%;
+    padding: 12px;
+    font-size: 22px;
+}
+
+.profile small {
+    color: #999;
+}
+
+.menu-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: #aaa;
+    letter-spacing: 1.5px;
+    margin: 25px 0 12px;
+}
+
+.menu-item {
+    padding: 13px;
+    border-radius: 12px;
+    margin-bottom: 7px;
+    color: #77718e;
+    font-size: 14px;
+}
+
+.menu-item.active {
+    background: #7968dc;
+    color: white;
+    font-weight: 600;
+}
+
+.menu-item span {
+    margin-right: 10px;
+}
+
+/* MAIN */
+.main {
+    padding: 35px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.greeting h1 {
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.greeting p {
+    color: #9994ad;
+    font-size: 14px;
+}
+
+.date {
+    background: #f3f0ff;
+    color: #7563d8;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* BANNER */
+.banner {
+    background: linear-gradient(110deg, #8271e8, #a99af5);
+    border-radius: 20px;
+    padding: 28px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.banner h2 {
+    font-size: 23px;
+    margin-bottom: 9px;
+}
+
+.banner p {
+    font-size: 13px;
+    opacity: .9;
+}
+
+.banner-icon {
+    font-size: 65px;
+}
+
+/* STATISTICS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    border-radius: 17px;
+    padding: 20px;
+    background: #faf9ff;
+    border: 1px solid #f0edfa;
+}
+
+.stat-icon {
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.stat-card h2 {
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    font-size: 12px;
+    color: #9994ad;
+}
+
+/* TASK SECTION */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.section-header h2 {
+    font-size: 20px;
+}
+
+.add-button {
+    background: #7968dc;
+    color: white;
+    padding: 11px 17px;
+    border-radius: 11px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 17px;
+    border: 1px solid #f0edf8;
+    border-radius: 15px;
+    background: white;
+}
+
+.check {
+    width: 21px;
+    height: 21px;
+    border: 2px solid #c9c2e7;
+    border-radius: 7px;
+    flex-shrink: 0;
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-info h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.task-info p {
+    font-size: 11px;
+    color: #aaa5b8;
+}
+
+.tag {
+    padding: 7px 11px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.purple {
+    background: #eeeaff;
+    color: #7968dc;
+}
+
+.pink {
+    background: #ffe9ed;
+    color: #e77d95;
+}
+
+.yellow {
+    background: #fff4d9;
+    color: #d59c38;
+}
+
+.green {
+    background: #e3f7ed;
+    color: #55ae80;
+}
+
+.completed {
+    opacity: .55;
+}
+
+.completed h3 {
+    text-decoration: line-through;
+}
+
+/* BOTTOM */
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 28px;
+}
+
+.bottom-card {
+    background: #faf9ff;
+    border: 1px solid #f0edfa;
+    border-radius: 17px;
+    padding: 20px;
+}
+
+.bottom-card h3 {
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.calendar div {
+    padding: 8px 2px;
+    border-radius: 8px;
+    color: #817b98;
+}
+
+.calendar .selected {
+    background: #7968dc;
+    color: white;
+}
+
+.calendar .today {
+    background: #ffe4e8;
+    color: #dc718b;
+}
+
+.reminder {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.reminder-icon {
+    font-size: 20px;
+}
+
+.reminder p {
+    color: #9994ad;
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.footer {
+    text-align: center;
+    color: #b4afc3;
+    font-size: 11px;
+    margin-top: 30px;
+}
+
+@media (max-width: 800px) {
+    body { padding: 10px; }
+
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        padding: 20px;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .profile {
+        margin-bottom: 15px;
+    }
+
+    .menu-title {
+        display: none;
+    }
+
+    .menu-item {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .banner-icon {
+        font-size: 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="logo">✦ taskie<span>.</span></div>
+
+        <div class="profile">
+            <div class="avatar">👩🏻‍🎓</div>
+            <div>
+                <strong>My Workspace</strong><br>
+                <small>Student Account</small>
+            </div>
+        </div>
+
+        <div class="menu-title">MENU UTAMA</div>
+        <div class="menu-item active"><span>▦</span> Dashboard</div>
+        <div class="menu-item"><span>📋</span> Semua Tugas</div>
+        <div class="menu-item"><span>📅</span> Hari Ini</div>
+        <div class="menu-item"><span>⏳</span> Mendatang</div>
+        <div class="menu-item"><span>✓</span> Selesai</div>
+
+        <div class="menu-title">KATEGORI</div>
+        <div class="menu-item"><span>📚</span> Akademik</div>
+        <div class="menu-item"><span>🎨</span> Organisasi</div>
+        <div class="menu-item"><span>⚽</span> Olahraga</div>
+        <div class="menu-item"><span>📖</span> Personal</div>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div class="greeting">
+                <h1>Good day! ☀️</h1>
+                <p>Let's make today productive and meaningful.</p>
+            </div>
+            <div class="date">📅 7 November 2026</div>
+        </div>
+
+        <section class="banner">
+            <div>
+                <h2>Make every day count! ✨</h2>
+                <p>Small steps today, big achievements tomorrow.</p>
+            </div>
+            <div class="banner-icon">🌷</div>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <h2>12</h2>
+                <p>Total Tugas</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⏰</div>
+                <h2>05</h2>
+                <p>Belum Selesai</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🌟</div>
+                <h2>07</h2>
+                <p>Tugas Selesai</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>My Tasks 📌</h2>
+                <div class="add-button">＋ Add New Task</div>
+            </div>
+
+            <div class="task-list">
+
+                <div class="task">
+                    <div class="check"></div>
+                    <div class="task-info">
+                        <h3>Menyelesaikan tugas Pemrograman</h3>
+                        <p>📅 8 November 2026 · 20:00</p>
+                    </div>
+                    <span class="tag purple">Akademik</span>
+                </div>
+
+                <div class="task">
+                    <div class="check"></div>
+                    <div class="task-info">
+                        <h3>Persiapan presentasi kelompok</h3>
+                        <p>📅 9 November 2026 · 10:00</p>
+                    </div>
+                    <span class="tag pink">Presentasi</span>
+                </div>
+
+                <div class="task">
+                    <div class="check"></div>
+                    <div class="task-info">
+                        <h3>Rapat organisasi mahasiswa</h3>
+                        <p>📅 10 November 2026 · 15:30</p>
+                    </div>
+                    <span class="tag yellow">Organisasi</span>
+                </div>
+
+                <div class="task">
+                    <div class="check"></div>
+                    <div class="task-info">
+                        <h3>Latihan olahraga sore</h3>
+                        <p>📅 11 November 2026 · 16:00</p>
+                    </div>
+                    <span class="tag green">Olahraga</span>
+                </div>
+
+                <div class="task completed">
+                    <div class="check">✓</div>
+                    <div class="task-info">
+                        <h3>Membaca materi perkembangan TIK</h3>
+                        <p>✓ Selesai · 6 November 2026</p>
+                    </div>
+                    <span class="tag purple">Akademik</span>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="bottom-grid">
+
+            <div class="bottom-card">
+                <h3>November 2026 🗓️</h3>
+                <div class="calendar">
+                    <div>Min</div><div>Sen</div><div>Sel</div>
+                    <div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
+
+                    <div>1</div><div>2</div><div>3</div>
+                    <div>4</div><div>5</div><div>6</div>
+                    <div class="today">7</div>
+
+                    <div>8</div><div>9</div><div>10</div>
+                    <div>11</div><div>12</div><div>13</div>
+                    <div>14</div>
+
+                    <div>15</div><div>16</div><div>17</div>
+                    <div>18</div><div>19</div><div>20</div>
+                    <div>21</div>
+                </div>
+            </div>
+
+            <div class="bottom-card">
+                <h3>Upcoming Reminders 🔔</h3>
+
+                <div class="reminder">
+                    <div class="reminder-icon">📚</div>
+                    <div>
+                        <strong>Deadline tugas coding</strong>
+                        <p>Besok · 20:00</p>
+                    </div>
+                </div>
+
+                <div class="reminder">
+                    <div class="reminder-icon">🎤</div>
+                    <div>
+                        <strong>Presentasi kelompok</strong>
+                        <p>9 November · 10:00</p>
+                    </div>
+                </div>
+
+                <div class="reminder">
+                    <div class="reminder-icon">🎨</div>
+                    <div>
+                        <strong>Rapat organisasi</strong>
+                        <p>10 November · 15:30</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Made with 💜 for a more organized student life · Taskie 2026
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>
