@@ -1,4 +1,5 @@
 # Day-1-Dreadout_Keyndra-Danadyaksa-Putra-Wijaya
+Nama: Keyndra Danadyaksa Putra Wijaya
 
 web/aplikasi ini yang bernama "Taskie" adalah website pengingat tugas yang membantu mahasiswa mengatur kegiatan dan deadline agar lebih terorganisir. Pengguna dapat mencatat tugas, menentukan tanggal dan waktu, melihat kalender, serta memantau tugas yang sudah selesai maupun yang belum dikerjakan.
 
